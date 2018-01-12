@@ -2,6 +2,11 @@ from sqlalchemy import create_engine
 import pandas as pd
 
 def get_data():
+    '''
+    OUTPUT:
+    x_df: airline dataframes created by extracting data from corresponding airline table in psql database
+    dfs: list of all dataframes available for analysis 
+    '''
     engine = create_engine('postgresql://manuelcollazo:manuelcollazo@localhost:5432/airlines')
 
     southwest_df = pd.read_sql('SELECT * FROM southwest;',engine)

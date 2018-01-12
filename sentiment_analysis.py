@@ -1,17 +1,16 @@
 import pull_data
 import string
-import re
 import numpy as np
 from wordcloud import WordCloud
-import seaborn as sns
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.naive_bayes import MultinomialNB
-from sklearn.model_selection import GridSearchCV
 from collections import Counter
 from nltk.corpus import stopwords
 import matplotlib.pyplot as plt
 
 def create_stop_words():
+    '''
+    OUTPUT:
+    stop_words: new stop words list with user added words
+    '''
     stop_words = stopwords.words('english')
     for word in ['flight','verified','review','airlines','fly','gate','airport',
                  'got','even','dallas','ft','worth','dfw','miami','again"verified',
@@ -21,22 +20,38 @@ def create_stop_words():
                  'air','lines','line',"i've",'flights','airline','plane','ua','',
                  'trip','flew','flying','us','time','one','told','hour','sfo',
                  'customer','seat','southwest','american','aa','delta','boeing',
-                 'united','ana','all','nippon','japan','tokyo','haneda','houston',
-                 'narita','nrt','qatar','al','mourjan','airways','verified',
+                 'united','ana','all','nippon','japan','tokyo','haneda','denver',
+                 'houston','narita','nrt','qatar','al','mourjan','airways','verified',
                  'jal','japanese','la']:
         stop_words.append(word)
     return stop_words
     
 def bag_of_words(df,positive,stop_words):
+    '''
+    INPUT:
+    df: dataframe specifying airline reviews
+    positive: 1 (if you want positive reviews for airline) or 0 (if you want negative reviews)
+    stop_words: list of words deemed unimportant for NLP analysis
+
+    OUTPUT:
+    bag_of_words: string of words deemed important for NLP analysis
+    '''
     class_words = []
     for x in df[df['positive'] == positive]['words']:
         for word in x.split(' '):
-            if word.strip(string.punctuation).lower() not in stop_words and word.strip(string.punctuation) not in set(string.punctuation) and word:
+            if word.strip(string.punctuation).lower() not in stop_words and word:
                 class_words.append(word.strip(string.punctuation).lower())
     bag_of_words = ' '.join(class_words)
     return bag_of_words
 
 def common_trigrams(bag_of_words):
+    '''
+    INPUT:
+    bag_of_words: string of words used for NLP analysis
+
+    OUTPUT:
+    Returns 5 most common trigrams in positive or negative reviews for particular airline
+    '''
     tokens = bag_of_words.split(' ')
     trigrams = [(tokens[i],tokens[i+1],tokens[i+2]) for i in range(0,len(tokens)-2)]
     trigrams_counter = Counter(trigrams)
@@ -50,6 +65,13 @@ def common_trigrams(bag_of_words):
     return trigrams_counter.most_common(5)
 
 def create_word_cloud(bag_of_words):
+    '''
+    INPUT:
+    bag_of_words: string of words used for NLP analysis
+
+    OUTPUT:
+    Word cloud based on words in bag_of_words
+    '''
     plt.figure(figsize=(10,10))
     wordcloud = WordCloud(colormap = 'magma',background_color='white').generate(bag_of_words)
     plt.imshow(wordcloud,interpolation='bilinear')

@@ -8,6 +8,13 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 def webscrape(airline):
+    '''
+    INPUT:
+    airline: text used to go to reviews website for particular airline
+
+    OUTPUT:
+    reviews: list of HTML segments that contains all relevant review information 
+    '''
     reviews = []
     browser = webd.Chrome()
     for page_num in range(1,50): 
@@ -24,7 +31,13 @@ def webscrape(airline):
 
 
 def parse_review(review: bs4.element.Tag) -> dict:
-    """Parse a review into a Python dictionary."""
+    '''
+    INPUT:
+    review: HTML segment that contains all relevant review information
+
+    OUTPUT:
+    d: dictionary of relevant review information
+    '''
     d = {}
     if review.select_one("div.rating-10 span"):
         d['rating'] = int(review.select_one("div.rating-10 span").text)
