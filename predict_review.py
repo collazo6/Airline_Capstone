@@ -26,13 +26,31 @@ def word_data(dfs,stop_words):
             lst_of_str_reviews.append(review_words.strip())
         df['nlp_words'] = lst_of_str_reviews
 
+def opt_alpha(nb,df):
+    '''
+    INPUT:
+    nb: Naive Bayes classifier
+    df: dataframe in order to train nb on
+
+    OUTPUT:
+    alpha: optimal alpha based on optimizing accuracy for data given
+    '''
+    params = {'alpha':[0.1, 0.2, 0.3, 0.4, 0.5]}
+    gc = GridSearchCV(nb,param_grid = params,cv=10,scoring='accuracy')
+    gc.fit(tfidf.fit_transform(df['nlp_words']),y)
+    return gc.best_params_['alpha']
+    
+
 
 if __name__ == '__main__':
     southwest_df,american_df,delta_df,united_df,ana_df,japan_df,qatar_df,dfs = pull_data.get_data()
     stop_words = sentiment_analysis.create_stop_words()
     word_data(dfs,stop_words)
 
-    for df in dfs:
+    #class weights based on picking up more negative reviews while maintaining legitimate accuracy (at least 80%)
+    weight_dict = {0:[.55,.45],1:[.65,.35],2:[.6,.4],3:[.5,.5],4:[.8,.2],5:[.7,.3],6:[.8,.2]}
+
+    for i,df in enumerate(dfs):
         tfidf = TfidfVectorizer(stop_words=stop_words)
         X = df['nlp_words']
         y = df['positive']
@@ -42,14 +60,13 @@ if __name__ == '__main__':
         X_train = tfidf.fit_transform(X_train)
         X_test = tfidf.transform(X_test)
 
-        nb = MultinomialNB(alpha = 0.3)
+        nb = MultinomialNB(class_prior = weight_dict[i])
         nb.fit(X_train,y_train)
 
-        # params = {'alpha':[0.1, 0.2, 0.3, 0.4, 0.5]}
-        # gc = GridSearchCV(nb,param_grid = params,cv=10,scoring='accuracy')
-        # gc.fit(tfidf.fit_transform(df['nlp_words']),y)
-        # print(gc.best_estimator_,gc.best_score_)
-        #Best accuracy scores are achieved with an alpha of 0.3
+        alpha = opt_alpha(nb,df)
+
+        nb = MultinomialNB(alpha = alpha,class_prior = weight_dict[i])
+        nb.fit(X_train,y_train)
 
         preds = nb.predict(X_test)
         print(metrics.confusion_matrix(y_test,preds).T)

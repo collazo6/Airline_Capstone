@@ -22,7 +22,9 @@ def create_stop_words():
                  'customer','seat','southwest','american','aa','delta','boeing',
                  'united','ana','all','nippon','japan','tokyo','haneda','denver',
                  'houston','narita','nrt','qatar','al','mourjan','airways','verified',
-                 'jal','japanese','la','a330','singapore','bangkok']:
+                 'jal','japanese','la','a330','singapore','bangkok','luggage','made',
+                 'way','pilot','phoenix','another','around','take','day','go',
+                 'much','take','say','asked','also','however','leg','much','though']:
         stop_words.append(word)
     return stop_words
     
