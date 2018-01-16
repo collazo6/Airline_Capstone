@@ -73,9 +73,10 @@ if __name__ == "__main__":
     japan_reviews = webscrape('japan-airlines')
 
     qatar_reviews = webscrape('qatar-airways')
-    i = 0
+
     airline = ['southwest-airlines','american-airlines','delta-air-lines','united-airlines','ana-all-nippon-airways','japan-airlines','qatar-airways']
     airline_dict = defaultdict(list)
+    i = 0
     for reviews in [southwest_reviews,american_reviews,delta_reviews,united_reviews,ana_reviews,japan_reviews,qatar_reviews]:
         for review in reviews:
             for r in review:
