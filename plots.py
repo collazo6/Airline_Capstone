@@ -114,6 +114,14 @@ def rating_dist(df,airline):
     plt.show()
 
 def violin_ratings(dfs,col):
+    '''
+    INPUT:
+    dfs: dataframes of all airlines
+    col: attribute of airline reviews to analyze
+
+    OUTPUT:
+    violin plots of 'col' data for each airline split on country of origin (USA or other)
+    '''
     fig, ax = plt.subplots(figsize=(20,10), ncols=4, nrows=2)
     i,j = 0,0
     airlines = ['Southwest','American','Delta','United','ANA','Japan','Qatar']
