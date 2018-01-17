@@ -1,7 +1,6 @@
 import pull_data
 import seaborn as sns
 import matplotlib.pyplot as plt
-import sys
 import plotly.graph_objs as go
 import plotly.plotly as py
 import plotly
@@ -87,6 +86,7 @@ def boxplot_ratings(dfs,col):
     )
 
     data = [trace0,trace1,trace2,trace3,trace4,trace5,trace6]
+
     plotly.offline.plot(data)
 
 
@@ -113,9 +113,28 @@ def rating_dist(df,airline):
     plt.tight_layout()
     plt.show()
 
+def violin_ratings(dfs,col):
+    fig, ax = plt.subplots(figsize=(20,10), ncols=4, nrows=2)
+    i,j = 0,0
+    airlines = ['Southwest','American','Delta','United','ANA','Japan','Qatar']
+    for ind,df in enumerate(dfs):
+        df['Country of Origin'] = df['country'] == 'United States'
+        df['Country of Origin'] = df['Country of Origin'].apply(lambda x: 'United States' if x == True else 'Other')
+        df[''] = airlines[ind]
+        df.sort_values(by = ['Country of Origin'],ascending = 0, inplace = True)
+        ax[i][j].set_title('{} : {}'.format(airlines[ind],col))
+        sns.violinplot(x='', y=col, hue='Country of Origin', data=df, palette='coolwarm', ax=ax[i,j],split=True)
+        j += 1
+        if j >=4:
+            j = 0
+            i = 1
+    plt.tight_layout()
+    plt.show()
+    
 
 if __name__ == '__main__':
     southwest_df,american_df,delta_df,united_df,ana_df,japan_df,qatar_df,dfs = pull_data.get_data()
-    #barplot_ratings(dfs)
-    #rating_dist(southwest_df,'Southwest')
-    boxplot_ratings(dfs,'seat_comfort')
+    barplot_ratings(dfs)
+    boxplot_ratings(dfs,'value_for_money') #will pull up graph in webpage
+    rating_dist(southwest_df,'Southwest')
+    violin_ratings(dfs,'rating')

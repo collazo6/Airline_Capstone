@@ -24,7 +24,8 @@ def create_stop_words():
                  'houston','narita','nrt','qatar','al','mourjan','airways','verified',
                  'jal','japanese','la','a330','singapore','bangkok','luggage','made',
                  'way','pilot','phoenix','another','around','take','day','go',
-                 'much','take','say','asked','also','however','leg','much','though']:
+                 'much','take','say','asked','also','however','leg','much','though',
+                 'chi','minh']:
         stop_words.append(word)
     return stop_words
     
@@ -92,8 +93,8 @@ if __name__ == "__main__":
         negative_trigrams = common_trigrams(negative_words)
         print(positive_trigrams)
         print(negative_trigrams)
-        create_word_cloud(positive_words)
-        create_word_cloud(negative_words)
+        # create_word_cloud(positive_words)
+        # create_word_cloud(negative_words)
 
     
     
