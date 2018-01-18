@@ -2,6 +2,7 @@ import pull_data
 import seaborn as sns
 import matplotlib.pyplot as plt
 import plotly.graph_objs as go
+from plotly.graph_objs import Layout
 import plotly.plotly as py
 import plotly
 
@@ -87,7 +88,10 @@ def boxplot_ratings(dfs,col):
 
     data = [trace0,trace1,trace2,trace3,trace4,trace5,trace6]
 
-    plotly.offline.plot(data)
+    plotly.offline.plot({
+    "data": data,
+    "layout": Layout(title="Ratings ({})".format(col))
+    })
 
 
 def rating_dist(df,airline):
@@ -109,7 +113,7 @@ def rating_dist(df,airline):
             j = 0
             i = 1
     for i, ax in enumerate(fig.axes):
-        ax.set_xticklabels(ax.get_xticklabels(), rotation = 42)
+        ax.set_xticklabels(ax.get_xticklabels(), rotation = 90)
     plt.tight_layout()
     plt.show()
 
@@ -142,7 +146,7 @@ def violin_ratings(dfs,col):
 
 if __name__ == '__main__':
     southwest_df,american_df,delta_df,united_df,ana_df,japan_df,qatar_df,dfs = pull_data.get_data()
-    barplot_ratings(dfs)
+    #barplot_ratings(dfs)
     boxplot_ratings(dfs,'value_for_money') #will pull up graph in webpage
-    rating_dist(southwest_df,'Southwest')
-    violin_ratings(dfs,'rating')
+    #rating_dist(southwest_df,'Southwest')
+    #violin_ratings(dfs,'rating')

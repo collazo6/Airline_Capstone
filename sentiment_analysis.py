@@ -2,6 +2,8 @@ import pull_data
 import string
 import numpy as np
 from wordcloud import WordCloud
+from PIL import Image
+from os import path
 from collections import Counter
 from nltk.corpus import stopwords
 import matplotlib.pyplot as plt
@@ -25,7 +27,7 @@ def create_stop_words():
                  'jal','japanese','la','a330','singapore','bangkok','luggage','made',
                  'way','pilot','phoenix','another','around','take','day','go',
                  'much','take','say','asked','also','however','leg','much','though',
-                 'chi','minh']:
+                 'chi','minh','would','get']:
         stop_words.append(word)
     return stop_words
     
@@ -67,24 +69,28 @@ def common_trigrams(bag_of_words):
         index+=1
     return trigrams_counter.most_common(5)
 
-def create_word_cloud(bag_of_words):
+def create_word_cloud(bag_of_words,stop_words):
     '''
     INPUT:
     bag_of_words: string of words used for NLP analysis
 
     OUTPUT:
-    Word cloud based on words in bag_of_words
+    Word cloud based on words in bag_of_words in the shape of a plane! (shape of the plane-icon.png silhouette)
     '''
+    d = path.dirname(__file__)
+    plane_mask = np.array(Image.open(path.join(d, "plane-icon.png")))
     plt.figure(figsize=(10,10))
-    wordcloud = WordCloud(colormap = 'magma',background_color='white').generate(bag_of_words)
+    wordcloud = WordCloud(colormap = 'magma',background_color='white',mask = plane_mask, stopwords = stop_words).generate(bag_of_words)
     plt.imshow(wordcloud,interpolation='bilinear')
     plt.axis("off")
     plt.show()
+
 
 if __name__ == "__main__":
     southwest_df,american_df,delta_df,united_df,ana_df,japan_df,qatar_df,dfs = pull_data.get_data()
 
     stop_words = create_stop_words()
+    master_str = ''
 
     for df in dfs: 
         positive_words = bag_of_words(df,1,stop_words)
@@ -93,8 +99,7 @@ if __name__ == "__main__":
         negative_trigrams = common_trigrams(negative_words)
         print(positive_trigrams)
         print(negative_trigrams)
-        # create_word_cloud(positive_words)
-        # create_word_cloud(negative_words)
-
+        create_word_cloud(positive_words,stop_words)
+        create_word_cloud(negative_words,stop_words)
     
     
