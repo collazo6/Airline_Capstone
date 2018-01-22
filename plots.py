@@ -146,7 +146,7 @@ def violin_ratings(dfs,col):
 
 if __name__ == '__main__':
     southwest_df,american_df,delta_df,united_df,ana_df,japan_df,qatar_df,dfs = pull_data.get_data()
-    # barplot_ratings(dfs)
-    # boxplot_ratings(dfs,'value_for_money') #will pull up graph in webpage
+    barplot_ratings(dfs)
+    boxplot_ratings(dfs,'value_for_money') #will pull up graph in webpage
     rating_dist(ana_df,'ANA')
     violin_ratings(dfs,'rating')
