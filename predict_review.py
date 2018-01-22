@@ -1,6 +1,7 @@
 import pull_data
 import sentiment_analysis
 import string
+import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.cross_validation import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -10,7 +11,7 @@ from sklearn.naive_bayes import MultinomialNB
 from sklearn.svm import SVC
 from sklearn.model_selection import GridSearchCV
 from sklearn import metrics
-from sklearn.decomposition import PCA
+from sklearn.decomposition import PCA,TruncatedSVD
 
 def word_data(dfs,stop_words):
     '''
@@ -63,6 +64,15 @@ def bag_of_words(df,stop_words):
     return bag_of_words
 
 def pca_plot(dfs,stop_words):
+    '''
+    INPUT:
+    dfs: dataframes of all airlines with respective reviews
+    stop_words: list of words deemed unimportant for NLP analysis
+
+    OUTPUT:
+    PCA plot: plotting review information and respective label (positive or negative) 
+    with condensed features (3)
+    '''
     review_texts = []
     labels = []
     for df in dfs:
@@ -75,22 +85,14 @@ def pca_plot(dfs,stop_words):
     scaler = StandardScaler()
 
     X = tfidf.fit_transform(review_texts)
+    y = labels
 
-
-    # model = Word2Vec(sentences = review_texts)
-
-    # X = model[model.wv.vocab]
-    # y = labels
-
-    pca = PCA(n_components=3)
-    result = pca.fit_transform(X.todense())
+    svd = TruncatedSVD(n_components=3)
+    result = svd.fit_transform(X)
     
     plt.figure(figsize=(30,20))
-    plt.scatter(result[:,0],result[:,1],result[:,2],c=np.array(labels[0]))
+    plt.scatter(result[:,0],result[:,1],result[:,2],c = np.array(labels))
 
-    # vocab = list(model.wv.vocab)
-    # for i, word in enumerate(vocab):
-    #     plt.annotate(word,xy=(result[i,0],result[i,1],result[i,2]))
     plt.show()
 
 

@@ -1,12 +1,16 @@
 import pull_data
 import string
 import numpy as np
+import tweepy 
+from textblob import TextBlob as tb
 from wordcloud import WordCloud
 from PIL import Image
 from os import path
 from collections import Counter
 from nltk.corpus import stopwords
 import matplotlib.pyplot as plt
+
+
 
 def create_stop_words():
     '''
@@ -85,6 +89,24 @@ def create_word_cloud(bag_of_words,stop_words):
     plt.axis("off")
     plt.show()
 
+def twitter_sentiment(consumer_key,consumer_secret,token,token_secret):
+    '''
+    INPUT:
+    consumer_key,consumer_secret,token,token_secret: consumer and token keys created on Twitter Apps
+
+    OUTPUT:
+    Tweets that contain api search term or terms
+    '''
+    authorization = tweepy.OAuthHandler(consumer_key, consumer_secret)
+    authorization.set_access_token(token, token_secret)
+
+    api = tweepy.API(authorization)
+    tweets = api.search('Nippon AND Airways')
+
+    for tweet in tweets:
+        print(tweet.text)
+        text_analysis = tb(tweet.text)
+        print('\n' + '\033[1m' + 'Sentiment score: {}\n\n'.format(text_analysis.sentiment.polarity) + '\033[0m')
 
 if __name__ == "__main__":
     southwest_df,american_df,delta_df,united_df,ana_df,japan_df,qatar_df,dfs = pull_data.get_data()
