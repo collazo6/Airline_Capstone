@@ -61,49 +61,61 @@ def parse_review(review: bs4.element.Tag) -> dict:
             d[row.td.attrs['class'][1]] = row.select('td')[1].text
     return d
 
+def webscrape_manager(airline_list):
+    '''
+    INPUT:
+    airline_list: list of airline names as strings
+    
+    OUTPUT:
+    webscrape_info_dict: dictionary with keys as airline names and values as webscraped html code
+    '''
+    webscrape_info_dict = {}
+    for airline in airline_list:
+        webscrape_info_dict[airline] = webscrape(airline)
+    return webscrape_info_dict
+    
+def review_parser(airline_list, webscrape_info_dict):
+    '''
+    INPUT:
+    airline_list: list of airline names as strings
+    webscrape_info_dict: dictionary with keys as airline names and values as webscraped html code
+
+    OUTPUT:
+    airline_dict: dictionary with keys as airline names and values as their respective reviews
+    '''
+    airline_dict = defaultdict(list)
+    i = 0
+    for reviews in webscrape_info_dict.values():
+        for review in reviews:
+            for r in review:
+                airline_dict[airline_list[i]].append(parse_review(r))
+        i += 1
+    return airline_dict
+
+def copy_to_sql(airline_list,airline_dict,engine)
+    '''
+    INPUT:
+    airline_list: list of airline names as strings
+    airline_dict: dictionary with keys as airline names and values as their respective reviews
+    engine: directory to SQL database to store webscraped review data
+
+    OUTPUT:
+    None
+    '''
+    for airline in airline_list:
+        pd.DataFrame(airline_dict[airline]).to_sql(airline.split('-')[0],con = engine)
+
 
 if __name__ == "__main__":
 
-    southwest_reviews = webscrape('southwest-airlines')
-    american_reviews = webscrape('american-airlines')
-    delta_reviews = webscrape('delta-air-lines')
-    united_reviews = webscrape('united-airlines')
+    airline_list = ['southwest-airlines','american-airlines','delta-air-lines',
+            'united-airlines','ana-all-nippon-airways','japan-airlines','qatar-airways']
 
-    ana_reviews = webscrape('ana-all-nippon-airways')
-    japan_reviews = webscrape('japan-airlines')
-
-    qatar_reviews = webscrape('qatar-airways')
-
-    airline = ['southwest-airlines','american-airlines','delta-air-lines','united-airlines','ana-all-nippon-airways','japan-airlines','qatar-airways']
-    airline_dict = defaultdict(list)
-    i = 0
-    for reviews in [southwest_reviews,american_reviews,delta_reviews,united_reviews,ana_reviews,japan_reviews,qatar_reviews]:
-        for review in reviews:
-            for r in review:
-                airline_dict[airline[i]].append(parse_review(r))
-        i += 1
-
-    southwest_df = pd.DataFrame(airline_dict['southwest-airlines'])
-    american_df = pd.DataFrame(airline_dict['american-airlines'])
-    delta_df = pd.DataFrame(airline_dict['delta-air-lines'])
-    united_df = pd.DataFrame(airline_dict['united-airlines'])
-
-    ana_df = pd.DataFrame(airline_dict['ana-all-nippon-airways'])
-    japan_df = pd.DataFrame(airline_dict['japan-airlines'])
-
-    qatar_df = pd.DataFrame(airline_dict['qatar-airways'])
+    webscrape_info_dict = webscrape_manager(airline_list)
+    airline_dict = review_parser(webscrape_info_dict,airline_list)
 
     engine = create_engine('postgresql://manuelcollazo:manuelcollazo@localhost:5432/airlines')
-
-    southwest_df.to_sql('southwest',con = engine)
-    american_df.to_sql('american',con = engine)
-    delta_df.to_sql('delta',con = engine)
-    united_df.to_sql('united',con = engine)
-
-    ana_df.to_sql('ana',con = engine)
-    japan_df.to_sql('japan',con = engine)
-
-    qatar_df.to_sql('qatar',con = engine)
+    copy_to_sql(airline_list,airline_dict,engine = )
 
         
 

@@ -95,6 +95,37 @@ def pca_plot(dfs,stop_words):
 
     plt.show()
 
+def model_score(dfs,stop_words,weight_dict):
+    '''
+    INPUT:
+    dfs: dataframes of all airlines with respective reviews
+    stop_words: list of words deemed unimportant for NLP analysis
+    weight_dict: dictionary with weights for positive and negative classification
+
+    OUTPUT:
+    confusion_matrix and accuracy score for each airline's predictive Naive Bayes model
+    '''
+    for i,df in enumerate(dfs):
+        tfidf = TfidfVectorizer(stop_words=stop_words)
+        X = df['nlp_words']
+        y = df['positive']
+
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33)
+
+        X_train = tfidf.fit_transform(X_train)
+        X_test = tfidf.transform(X_test)
+
+        nb = MultinomialNB(class_prior = weight_dict[i])
+        nb.fit(X_train,y_train)
+
+        alpha = opt_alpha(nb,df)
+
+        nb = MultinomialNB(alpha = alpha,class_prior = weight_dict[i])
+        nb.fit(X_train,y_train)
+
+        preds = nb.predict(X_test)
+        print(metrics.confusion_matrix(y_test,preds).T)
+        print(metrics.accuracy_score(y_test,preds))
 
 if __name__ == '__main__':
     southwest_df,american_df,delta_df,united_df,ana_df,japan_df,qatar_df,dfs = pull_data.get_data()
@@ -103,27 +134,6 @@ if __name__ == '__main__':
 
     #class weights based on picking up more negative reviews while maintaining legitimate accuracy (at least 80%)
     weight_dict = {0:[.55,.45],1:[.65,.35],2:[.6,.4],3:[.5,.5],4:[.8,.2],5:[.7,.3],6:[.8,.2]}
-
-    # for i,df in enumerate(dfs):
-    #     tfidf = TfidfVectorizer(stop_words=stop_words)
-    #     X = df['nlp_words']
-    #     y = df['positive']
-
-    #     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33)
-
-    #     X_train = tfidf.fit_transform(X_train)
-    #     X_test = tfidf.transform(X_test)
-
-    #     nb = MultinomialNB(class_prior = weight_dict[i])
-    #     nb.fit(X_train,y_train)
-
-    #     alpha = opt_alpha(nb,df)
-
-    #     nb = MultinomialNB(alpha = alpha,class_prior = weight_dict[i])
-    #     nb.fit(X_train,y_train)
-
-    #     preds = nb.predict(X_test)
-    #     print(metrics.confusion_matrix(y_test,preds).T)
-    #     print(metrics.accuracy_score(y_test,preds))
-
+    model_score(dfs,stop_words,weight_dict)
+    
     pca_plot(dfs,stop_words)

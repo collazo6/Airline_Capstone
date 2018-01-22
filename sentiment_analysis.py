@@ -19,7 +19,7 @@ def create_stop_words():
     '''
     stop_words = stopwords.words('english')
     for word in ['flight','verified','review','airlines','fly','gate','airport',
-                 'got','even','dallas','ft','worth','dfw','miami','again"verified',
+                 'got','even','dallas','ft','worth','dfw','miami','mia','again"verified',
                  'new','york','jfk','via','los','angeles','chicago','atlanta','atl',
                  'san','francisco','ord','newark','aircraft','sydney','b777','a380',
                  'las','vegas','salt','lake','doha','cape','town','doh','lax','ife',
@@ -31,7 +31,7 @@ def create_stop_words():
                  'jal','japanese','la','a330','singapore','bangkok','luggage','made',
                  'way','pilot','phoenix','another','around','take','day','go',
                  'much','take','say','asked','also','however','leg','much','though',
-                 'chi','minh','would','get']:
+                 'chi','minh','would','get','could','back']:
         stop_words.append(word)
     return stop_words
     
@@ -89,6 +89,17 @@ def create_word_cloud(bag_of_words,stop_words):
     plt.axis("off")
     plt.show()
 
+def word_analysis(dfs,stop_words):
+    for df in dfs: 
+        positive_words = bag_of_words(df,1,stop_words)
+        negative_words = bag_of_words(df,0,stop_words)
+        positive_trigrams = common_trigrams(positive_words)
+        negative_trigrams = common_trigrams(negative_words)
+        print(positive_trigrams)
+        print(negative_trigrams)
+        create_word_cloud(positive_words,stop_words)
+        create_word_cloud(negative_words,stop_words)
+
 def twitter_sentiment(consumer_key,consumer_secret,token,token_secret):
     '''
     INPUT:
@@ -112,16 +123,7 @@ if __name__ == "__main__":
     southwest_df,american_df,delta_df,united_df,ana_df,japan_df,qatar_df,dfs = pull_data.get_data()
 
     stop_words = create_stop_words()
-    master_str = ''
-
-    for df in dfs: 
-        positive_words = bag_of_words(df,1,stop_words)
-        negative_words = bag_of_words(df,0,stop_words)
-        positive_trigrams = common_trigrams(positive_words)
-        negative_trigrams = common_trigrams(negative_words)
-        print(positive_trigrams)
-        print(negative_trigrams)
-        create_word_cloud(positive_words,stop_words)
-        create_word_cloud(negative_words,stop_words)
+    
+    word_analysis(dfs,stop_words)
     
     
