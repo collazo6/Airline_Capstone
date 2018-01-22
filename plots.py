@@ -117,7 +117,7 @@ def rating_dist(df,airline):
     plt.tight_layout()
     plt.show()
 
-def violin_ratings(dfs,col):
+def violin_ratings(dfs,col,country = 'United States'):
     '''
     INPUT:
     dfs: dataframes of all airlines
@@ -130,8 +130,8 @@ def violin_ratings(dfs,col):
     i,j = 0,0
     airlines = ['Southwest','American','Delta','United','ANA','Japan','Qatar']
     for ind,df in enumerate(dfs):
-        df['Country of Origin'] = df['country'] == 'United States'
-        df['Country of Origin'] = df['Country of Origin'].apply(lambda x: 'United States' if x == True else 'Other')
+        df['Country of Origin'] = df['country'] == country
+        df['Country of Origin'] = df['Country of Origin'].apply(lambda x: country if x == True else 'Other')
         df[''] = airlines[ind]
         df.sort_values(by = ['Country of Origin'],ascending = 0, inplace = True)
         ax[i][j].set_title('{} : {}'.format(airlines[ind],col))
@@ -149,4 +149,4 @@ if __name__ == '__main__':
     barplot_ratings(dfs)
     boxplot_ratings(dfs,'value_for_money') #will pull up graph in webpage
     rating_dist(ana_df,'ANA')
-    violin_ratings(dfs,'rating')
+    violin_ratings(dfs,'rating','United States')

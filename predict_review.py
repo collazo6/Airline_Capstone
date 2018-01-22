@@ -31,7 +31,7 @@ def word_data(dfs,stop_words):
             lst_of_str_reviews.append(review_words.strip())
         df['nlp_words'] = lst_of_str_reviews
 
-def opt_alpha(nb,df):
+def opt_alpha(nb,df,tfidf,y):
     '''
     INPUT:
     nb: Naive Bayes classifier
@@ -118,7 +118,7 @@ def model_score(dfs,stop_words,weight_dict):
         nb = MultinomialNB(class_prior = weight_dict[i])
         nb.fit(X_train,y_train)
 
-        alpha = opt_alpha(nb,df)
+        alpha = opt_alpha(nb,df,tfidf,y)
 
         nb = MultinomialNB(alpha = alpha,class_prior = weight_dict[i])
         nb.fit(X_train,y_train)

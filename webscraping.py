@@ -108,14 +108,14 @@ def copy_to_sql(airline_list,airline_dict,engine)
 
 if __name__ == "__main__":
 
-    airline_list = ['southwest-airlines','american-airlines','delta-air-lines',
-            'united-airlines','ana-all-nippon-airways','japan-airlines','qatar-airways']
+    airline_list = ['southwest-airlines','american-airlines','delta-air-lines','united-airlines',
+                    'ana-all-nippon-airways','japan-airlines','qatar-airways']
 
     webscrape_info_dict = webscrape_manager(airline_list)
     airline_dict = review_parser(webscrape_info_dict,airline_list)
 
     engine = create_engine('postgresql://manuelcollazo:manuelcollazo@localhost:5432/airlines')
-    copy_to_sql(airline_list,airline_dict,engine = )
+    copy_to_sql(airline_list,airline_dict,engine)
 
         
 
