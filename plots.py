@@ -112,8 +112,8 @@ def rating_dist(df,airline):
         if j >=5:
             j = 0
             i = 1
-    for i, ax in enumerate(fig.axes):
-        ax.set_xticklabels(ax.get_xticklabels(), rotation = 90)
+    # for i, ax in enumerate(fig.axes):
+    #     ax.set_xticklabels(ax.get_xticklabels(), rotation = 90)
     plt.tight_layout()
     plt.show()
 
@@ -142,11 +142,81 @@ def violin_ratings(dfs,col,country = 'United States'):
             i = 1
     plt.tight_layout()
     plt.show()
+
+def rating_by_year(dfs):
+    sns.set()
+    markers = ['p','*','^','H','P','o','X']
+    colors = ['b','r','g','c','m','k','y']
+    airlines = ['Southwest','American','Delta','United','ANA','Japan','Qatar']
+    i = 0
+    for df in dfs:
+        dates = [2015,2016,2017]
+        values = [df[df['year'] == 2015]['rating'].mean(),df[df['year'] == 2016]['rating'].mean(),df[df['year'] == 2017]['rating'].mean()]
+
+        xticks = [2015, 2016, 2017]
+        ticklabels = ['2015', '2016', '2017']
+        plt.xticks(xticks, ticklabels)
+
+        yticks = [1,2,3,4,5,6,7,8,9,10]
+        ticklabels_y = ['1','2','3','4','5','6','7','8','9','10']
+        plt.yticks(yticks, ticklabels_y)
+
+        plt.xlim(2014.9,2017.1)
+        plt.ylim(2,9)
+        
+        
+        
+        plt.plot(dates,values, '{}{}:'.format(markers[i],colors[i]), label = airlines[i])
+        
+        plt.legend(bbox_to_anchor=(0., 1.02, 1., .102), loc=3,
+            ncol=3, mode="expand", borderaxespad=0.)
+        i+=1
     
+    plt.show()
+
+def united_incident(united_df):
+    sns.set()
+    dates = [1,2,3,4,5,6,7,8,9,10,11,12]
+    values = [united_df[(united_df['month'] == 1) & (united_df['year'] == 2017)]['rating'].mean(),
+            united_df[(united_df['month'] == 2) & (united_df['year'] == 2017)]['rating'].mean(),
+            united_df[(united_df['month'] == 3) & (united_df['year'] == 2017)]['rating'].mean(),
+            united_df[(united_df['month'] == 4) & (united_df['year'] == 2017)]['rating'].mean(),
+            united_df[(united_df['month'] == 5) & (united_df['year'] == 2017)]['rating'].mean(),
+            united_df[(united_df['month'] == 6) & (united_df['year'] == 2017)]['rating'].mean(),
+            united_df[(united_df['month'] == 7) & (united_df['year'] == 2017)]['rating'].mean(),
+            united_df[(united_df['month'] == 8) & (united_df['year'] == 2017)]['rating'].mean(),
+            united_df[(united_df['month'] == 9) & (united_df['year'] == 2017)]['rating'].mean(),
+            united_df[(united_df['month'] == 10) & (united_df['year'] == 2017)]['rating'].mean(),
+            united_df[(united_df['month'] == 11) & (united_df['year'] == 2017)]['rating'].mean(),
+            united_df[(united_df['month'] == 12) & (united_df['year'] == 2017)]['rating'].mean()]
+
+    xticks = [1,2,3,4,5,6,7,8,9,10,11,12]
+    ticklabels = ['Jan','Feb','Mar','Apr','May','June','July','Aug','Sept','Oct','Nov','Dec']
+    plt.xticks(xticks, ticklabels,rotation = 90)
+
+    yticks = [1,2,3,4]
+    ticklabels_y = ['1','2','3','4']
+    plt.yticks(yticks, ticklabels_y)
+
+    plt.xlim(1,12)
+    plt.ylim(1,4)
+
+    plt.title('Overall Rating by Month (United Airlines - 2017)')
+    plt.plot(dates,values, 'ob--', label = 'Mean Rating')
+    plt.plot(4+9/30,3.04,marker = 'P', color = 'r', markersize=15, label = 'incident')
+    plt.plot(9+7/30,3.13,marker = 'X', color = 'r', markersize=15, label = 'exoneration')
+
+    plt.legend(bbox_to_anchor=(1, 0.1, -.01, 0),
+        ncol=3, borderaxespad=0.)
+
+    plt.tight_layout()
+    plt.show()
 
 if __name__ == '__main__':
     southwest_df,american_df,delta_df,united_df,ana_df,japan_df,qatar_df,dfs = pull_data.get_data()
     barplot_ratings(dfs)
-    boxplot_ratings(dfs,'value_for_money') #will pull up graph in webpage
-    rating_dist(ana_df,'ANA')
+    boxplot_ratings(dfs,'cabin_staff_service') #will pull up graph in webpage
+    rating_dist(united_df,'united')
     violin_ratings(dfs,'rating','United States')
+    rating_by_year(dfs)
+    united_incident(united_df)
