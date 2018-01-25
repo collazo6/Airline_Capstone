@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 from sklearn.cross_validation import train_test_split
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.preprocessing import StandardScaler
-from gensim.models import Word2Vec
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.svm import SVC
 from sklearn.model_selection import GridSearchCV
