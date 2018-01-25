@@ -91,8 +91,8 @@ def pca_plot(dfs,stop_words):
     result = svd.fit_transform(X)
     
     plt.figure(figsize=(30,20))
-    plt.scatter(result[:,0],result[:,1],result[:,2],c = np.array(labels))
-
+    plt.scatter(result[:,0],result[:,1],c = np.array(labels),marker = '*',cmap='coolwarm')
+    plt.title('PCA Plot',{'fontsize':20})
     plt.show()
 
 def model_score(dfs,stop_words,weight_dict):

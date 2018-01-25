@@ -20,12 +20,11 @@ def get_data(engine = create_engine('postgresql://manuelcollazo:manuelcollazo@lo
     dfs = [southwest_df,american_df,delta_df,united_df,ana_df,japan_df,qatar_df]
 
     for df in dfs:
-        df['words'] = df['headline'] + df['body']
+        df['words'] = df['headline'] + ' ' + df['body']
         df['positive'] = df['rating']>5
         df['positive'] = df['positive'].apply(lambda x: 1 if x == True else 0)
         df['date_flown'] = pd.to_datetime(df['date_flown'])
         df['year'] = pd.DatetimeIndex(df['date_flown']).year
-        
-    united_df['month'] = pd.DatetimeIndex(united_df['date_flown']).month
+        df['month'] = pd.DatetimeIndex(df['date_flown']).month
 
     return southwest_df,american_df,delta_df,united_df,ana_df,japan_df,qatar_df,dfs

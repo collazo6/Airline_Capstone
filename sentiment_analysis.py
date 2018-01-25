@@ -19,7 +19,7 @@ def create_stop_words():
     '''
     stop_words = stopwords.words('english')
     for word in ['flight','verified','review','airlines','fly','gate','airport',
-                 'got','even','dallas','ft','worth','dfw','miami','mia','again"verified',
+                 'got','even','dallas','ft','worth','dfw','miami','mia','a350',
                  'new','york','jfk','via','los','angeles','chicago','atlanta','atl',
                  'san','francisco','ord','newark','aircraft','sydney','b777','a380',
                  'las','vegas','salt','lake','doha','cape','town','doh','lax','ife',
@@ -31,7 +31,7 @@ def create_stop_words():
                  'jal','japanese','la','a330','singapore','bangkok','luggage','made',
                  'way','pilot','phoenix','another','around','take','day','go',
                  'much','take','say','asked','also','however','leg','much','though',
-                 'chi','minh','would','get','could','back']:
+                 'chi','minh','would','get','could','back','really']:
         stop_words.append(word)
     return stop_words
     
@@ -73,7 +73,7 @@ def common_trigrams(bag_of_words):
         index+=1
     return trigrams_counter.most_common(5)
 
-def create_word_cloud(bag_of_words,stop_words):
+def create_word_cloud(bag_of_words,stop_words,title):
     '''
     INPUT:
     bag_of_words: string of words used for NLP analysis
@@ -85,20 +85,88 @@ def create_word_cloud(bag_of_words,stop_words):
     plane_mask = np.array(Image.open(path.join(d, "plane-icon.png")))
     plt.figure(figsize=(10,10))
     wordcloud = WordCloud(colormap = 'magma',background_color='white',mask = plane_mask, stopwords = stop_words).generate(bag_of_words)
+    plt.title(title,fontdict = {'fontsize':20})
     plt.imshow(wordcloud,interpolation='bilinear')
     plt.axis("off")
     plt.show()
 
-def word_analysis(dfs,stop_words):
+def word_analysis(dfs,stop_words,positive=1):
+    '''
+    INPUT:
+    dfs: list of dataframes of reviews for each airline
+    stop_words: words deemed unimportant for NLP analysis
+    positive: 1 to get reviews with overall rating of 6 or more or 0 for reviews with overall rating of 5 or less
+
+    OUTPUT:
+    wordcloud of words that are most used in reviews that are either positive or negative
+    '''
+    airlines = ['Southwest Airlines','American Airlines','Delta Air Lines',
+                'United Airlines','All Nippon Airways','Japan Airlines','Qatar Airways']
+    i = 0
+    sentiment = ''
+    if positive:
+        sentiment = 'Positive Words'
+    else:
+        sentiment = 'Negative Words'
     for df in dfs: 
-        positive_words = bag_of_words(df,1,stop_words)
-        negative_words = bag_of_words(df,0,stop_words)
-        positive_trigrams = common_trigrams(positive_words)
-        negative_trigrams = common_trigrams(negative_words)
-        print(positive_trigrams)
-        print(negative_trigrams)
-        create_word_cloud(positive_words,stop_words)
-        create_word_cloud(negative_words,stop_words)
+        sentiment_words = bag_of_words(df,positive,stop_words)
+        create_word_cloud(sentiment_words,stop_words,'{} : {}'.format(airlines[i],sentiment))
+        i += 1
+
+def trigram_analysis(dfs,stop_words,positive=1):
+    '''
+    INPUT:
+    dfs: list of dataframes of reviews for each airline
+    stop_words: words deemed unimportant for NLP analysis
+    positive: 1 to get reviews with overall rating of 6 or more or 0 for reviews with overall rating of 5 or less
+
+    OUTPUT:
+    pie graph of top 5 most used trigrams in reviews that are either positive or negative
+    '''
+    airlines = ['Southwest Airlines','American Airlines','Delta Air Lines',
+                'United Airlines','All Nippon Airways','Japan Airlines','Qatar Airways']
+    i = 0
+    sentiment = ''
+    if positive:
+        sentiment = 'Positive Trigrams\n'
+    else:
+        sentiment = 'Negative Trigrams\n'
+
+    for df in dfs:
+        sentiment_words = bag_of_words(df,positive,stop_words)
+        trigrams = common_trigrams(sentiment_words)
+        labels = []
+        values = []
+        for k,v in trigrams:
+            labels.append(' '.join(k).title())
+            values.append(v)
+        if positive:
+            colors = ['yellowgreen', 'gold', 'lightskyblue', 'lightcoral', 'firebrick']
+        else:
+            colors = ['firebrick', 'lightcoral', 'lightskyblue', 'gold', 'yellowgreen']
+        explode = (0.1, 0, 0, 0, 0) # only "explode" the 2nd slice (i.e. 'Hogs')
+
+        plt.pie(values, explode=explode, labels=labels, colors=colors,
+                autopct=make_autopct(values),shadow=True, startangle=90)
+        # Set aspect ratio to be equal so that pie is drawn as a circle.
+        plt.axis('equal')
+        plt.title('{} : {}'.format(airlines[i],sentiment),fontdict = {'fontsize':20})
+        i += 1
+        plt.show()
+
+def make_autopct(values):
+    '''
+    INPUT:
+    values: number of times event (trigrams) occurs in text
+
+    OUTPUT:
+    values to be used in pie graph
+    '''
+    def my_autopct(pct):
+        total = sum(values)
+        val = int(round(pct*total/100.0))
+        return '{v:d}'.format(v=val)
+    return my_autopct
 
 def twitter_sentiment(consumer_key,consumer_secret,token,token_secret):
     '''
@@ -123,7 +191,6 @@ if __name__ == "__main__":
     southwest_df,american_df,delta_df,united_df,ana_df,japan_df,qatar_df,dfs = pull_data.get_data()
 
     stop_words = create_stop_words()
-    
-    word_analysis(dfs,stop_words)
-    
-    
+
+    word_analysis(dfs,stop_words,0)
+    trigram_analysis(dfs,stop_words,0)
