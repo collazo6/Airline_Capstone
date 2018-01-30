@@ -6,7 +6,7 @@ The data was collected by webscraping reviews from the site AirlineQuality.com f
 
 # EDA
 
-!(image)[open images/Airlines_mean_ratings.png]
+!(image)[images/Airlines_mean_ratings.png]
 
 
 
