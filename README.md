@@ -8,6 +8,9 @@ The data was collected by webscraping reviews from the site AirlineQuality.com f
 
 ![image](images/Airlines_mean_ratings.png)
 
+The above image shows the mean ratings by airline for different attributes of the flight.  As we can see, the Japanese Airlines tend to be better than all the larger American carriers, but specifically stand out in the service department.  Where Qatar seems to stand out, is the amenities it offers as part of their flight as well as the customer's perception of value for money paid.
+
+![image](images/Ground_service_barplot.png)![image](images/Airline_valueformoney_boxplot.png)
 
 
 
