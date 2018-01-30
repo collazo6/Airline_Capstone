@@ -24,6 +24,8 @@ Because there were so many reviews from Americans, I decided to see how American
 
 ![image](images/Culture_insights_ratings.png)
 
+From the above graph, we can see that Americans tend to rate flight experience very similarly to others when it is a high quality airline.  For lower rated airlines, Americans are much more likely to give a very negative review compared to other cultures.  We can potentially theorize that Americans tend to speak their mind more readily if they are unsatisfied with a product.  More in depth analysis and larger data availability for other cultures may be needed in order to come to more concrete conclusions.
+
 ## Perception of Value Over Time
 
 I was also curious about if certain airlines were improving or getting worse over time in terms of their average overall rating.
@@ -59,7 +61,7 @@ Here, we notice the phrases that are common in positive/negative reviews.  This 
 I utilized a Naive Bayes Classification model in order to classify reviews as positive and negative.  I achieved an average of 85% accuracy on all airlines.  Weights for positive and negative classification were optimized based on the availability of negative reviews.
 Optimal alpha values for each model were determined by GridSearch
 
-#Conclusion
+# Conclusion
 
 The information that was gained from analyzing these reviews was very insightful and can be utilized in real world scenarios in order to analyze the strengths and weaknesses of a company, utilize benchmarking on higher quality businesses to see how ones own company stacks up, and understand how external events and the human psychological reaction can have an effect on the perception of quality of a product.
 
