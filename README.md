@@ -59,7 +59,7 @@ Here, we notice the phrases that are common in positive/negative reviews.  This 
 ## Model
 
 I utilized a Naive Bayes Classification model in order to classify reviews as positive and negative.  I achieved an average of 85% accuracy on all airlines.  Weights for positive and negative classification were optimized based on the availability of negative reviews.
-Optimal alpha values for each model were determined by GridSearch
+Optimal alpha values for each model were determined by Grid Search.
 
 # Conclusion
 
