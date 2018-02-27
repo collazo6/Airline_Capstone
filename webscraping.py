@@ -92,7 +92,7 @@ def review_parser(airline_list, webscrape_info_dict):
         i += 1
     return airline_dict
 
-def copy_to_sql(airline_list,airline_dict,engine)
+def copy_to_sql(airline_list,airline_dict,engine):
     '''
     INPUT:
     airline_list: list of airline names as strings
@@ -112,7 +112,7 @@ if __name__ == "__main__":
                     'ana-all-nippon-airways','japan-airlines','qatar-airways']
 
     webscrape_info_dict = webscrape_manager(airline_list)
-    airline_dict = review_parser(webscrape_info_dict,airline_list)
+    airline_dict = review_parser(airline_list, webscrape_info_dict)
 
     engine = create_engine('postgresql://manuelcollazo:manuelcollazo@localhost:5432/airlines')
     copy_to_sql(airline_list,airline_dict,engine)
