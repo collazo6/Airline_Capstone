@@ -1,4 +1,4 @@
-# Airline Capstone
+# International Airline Review Sentiment Analysis and Prediction
 
 This is a project that provides an in depth analysis of airline reviews.  The intent of this analysis is based on comparing and contrasting the effectiveness in different attributes of flights that led to positive sentiment from reviewers. 
 
