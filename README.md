@@ -2,7 +2,7 @@
 
 This repository contains scripts and data analysis tools which were used in order to provide an in depth analysis of airline reviews.  The intent of this analysis was to compare and contrast the importance of different attributes of flight that led to positive or negative sentiments from reviewers. 
 
-The data was collected by webscraping reviews from the website [AirlineQuality.com](https://www.airlinequality.com/) for the 4 largest airlines in the United States, the 2 largest airlines from Japan, and Qatar Airways, which was considered the World's best Airline by Skytrax in 2017.  Qatar Airways was used as a benchmark when comparing USA and Japan based airlines.  PostreSQL was utilized to store the data for further analysis.
+The data was collected by webscraping reviews from the website [www.AirlineQuality.com](https://www.airlinequality.com/) for the 4 largest airlines in the United States, the 2 largest airlines from Japan, and Qatar Airways, which was considered the World's best Airline by Skytrax in 2017.  Qatar Airways was used as a benchmark when comparing USA and Japan based airlines.  PostreSQL was utilized to store the data for further analysis.
 
 # EDA
 
@@ -36,7 +36,7 @@ As one can see, most airlines tended to decrease in quality over time.  This is 
 
 ## The Effect of Bad Publicity on Perception of Quality
 
-United had the largest drop (30%) in perception of quality from 2016 to 2017.  It is suspected that this is at least partly due to an event that unfolded on United Airlines that made it's way to the news.  On April 4th, 2017 a doctor was forcibly removed from an overbooked flight. From the below graph we can see that after people were notified of the event, the overall rating of flight satisfaction dropped drastically.  After July, we notice some recovery and then in the beginning of September United is exonerated from the event, causing more news coverage and another sharp drop in flight satisfaction.
+United had the largest drop (30%) in perception of quality from 2016 to 2017.  It is suspected that this is at least partly due to an event that unfolded on United Airlines that made it's way on the news.  On April 4th, 2017 a doctor was forcibly removed from an overbooked flight. From the below graph we can see that after people were notified of the event, the overall rating of flight satisfaction dropped drastically.  After July, we notice some recovery and then in the beginning of September, United is exonerated from the event causing more news coverage and another sharp drop in flight satisfaction.
 
 ![image](images/United_incident_plot.png)
 
@@ -62,4 +62,4 @@ A Naive Bayes classification algorithm was used in order to attempt to classify 
 
 # Conclusion
 
-Insights that were gained from this in depth analysis can be utilized in various real world scenarios in order to more thoroughly understand the strengths and weaknesses of a company, utilize benchmarking in order to compare and contrast against other businesses in one's industry, and even to quantify the benefit or detriment that may be associated with bad publicity and gauge the human psychological reaction that could have an effect on the perception of quality of a product.
+Insights that were gained from this in depth analysis can be utilized in various real world scenarios in order to more thoroughly understand the strengths and weaknesses of a company, utilize benchmarking in order to compare and contrast against other businesses in one's industry, and even to quantify the benefit or detriment that may be associated with publicity and gauge the human psychological reaction that could have an effect on the perception of quality of a product.
