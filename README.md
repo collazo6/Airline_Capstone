@@ -1,8 +1,8 @@
 # International Airline Review Sentiment Analysis and Prediction
 
-This repository contains scripts and data analysis tools which were used in order to provide an in depth analysis of airline reviews.  The intent of this analysis was to compare and contrast the importance of different attributes of flight that led to positive or negative sentiments from reviewers. 
+This repository contains scripts and data analysis tools which were used in order to provide an in depth analysis of airline reviews.  The intent of this analysis was to compare and contrast the importance of different attributes of flight that led to positive or negative reviews from airline customers. 
 
-The data was collected by webscraping reviews from the website [www.AirlineQuality.com](https://www.airlinequality.com/) for the 4 largest airlines in the United States, the 2 largest airlines from Japan, and Qatar Airways, which was considered the World's best Airline by Skytrax in 2017.  Qatar Airways was used as a benchmark when comparing USA and Japan based airlines.  PostreSQL was utilized to store the data for further analysis.
+The data was collected by webscraping reviews from the website [AirlineQuality.com](https://www.airlinequality.com/) for the 4 largest airlines in the United States, the 2 largest airlines from Japan, and Qatar Airways, which was considered the world's best airline by Skytrax in 2017.  Qatar Airways was used as a benchmark when comparing USA and Japan based airlines.  PostreSQL was utilized in order to store the large amounts of data for further analysis.
 
 # EDA
 
