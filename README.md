@@ -7,14 +7,12 @@ The data was collected by webscraping reviews from the website [AirlineQuality.c
 <br />
 
 <div align="center">
-  <img img src="images/Airlines_mean_ratings.png">
+  <img src="images/Airlines_mean_ratings.png">
 </div>
 
 # EDA
 
 ## Attribute Analysis
-
-![image](images/Airlines_mean_ratings.png)
 
 The above image shows the mean ratings by airline for different attributes of flight.  As we can see, the Japanese airlines tend to score higher than all the larger American carriers, but specifically stand out in the service department.
 
