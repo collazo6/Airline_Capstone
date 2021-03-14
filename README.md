@@ -14,51 +14,85 @@ The data was collected by webscraping reviews from the website [AirlineQuality.c
 
 ## Attribute Analysis
 
-The above image shows the mean ratings by airline for different attributes of flight.  As we can see, the Japanese airlines tend to score higher than all the larger American carriers, but specifically stand out in the service department.
+The barplots shown above, in the introduction to this repository, depict the mean ratings by airline for each different attribute of flight.  As we can see, the Japanese airlines tend to score higher than all the larger American carriers, but specifically stand out in the service department.
 
-![image](images/Ground_service_barplot.png)
+<br />
 
-Where Qatar seems to stand out is the amenities that it offers as part of their flight experience as well as the customer's perception of the value for money attribute.
+<div align="center">
+  <img src="images/Ground_service_barplot.png">
+</div>
 
-![image](images/Airline_valueformoney_boxplot.png)
+<br />
+
+Where Qatar Airways seems to stand out is the amenities that it offers as part of their flight experience.  This motivates their customers to rate their perception of value for money very highly for this carrier.
+
+<br />
+
+<div align="center">
+  <img src="images/Airline_valueformoney_boxplot.png">
+</div>
 
 ## Cultural Analysis
 
 Because there were so many reviews from Americans, I decided to see how Americans were rating their flight experience compared to those from other countries.
 
-![image](images/Culture_insights_ratings.png)
+<br />
 
-From the above graph, we can see that Americans tend to rate flight experience very similarly to others when it is a high quality airline.  For lower rated airlines, Americans are much more likely to give a very negative review compared to other cultures.  We can potentially theorize that Americans tend to speak their mind more readily if they are unsatisfied with a product.  More in depth analysis and larger data availability for other cultures may be needed in order to come to more concrete conclusions.
+<div align="center">
+  <img src="images/Culture_insights_ratings.png">
+</div>
+
+<br />
+
+From the graph above, we can see that Americans tend to rate flight experience very similarly to people of other nationalities when it is a high quality airline.  For lower rated airlines, Americans are much more likely to give a very negative review compared to other cultures.  We can potentially theorize that Americans tend to expect more for their money when they are buying a product or service, even if it's of lower value.  More in depth analysis and larger data availability for other cultures may be needed in order to come to more concrete conclusions.
 
 ## Perception of Value Over Time
 
 An interesting exercise would be to examine if certain airlines were improving or getting worse over time in terms of their average overall rating.
 
-![image](images/Airlines_rating_by_year.png)
+<br />
 
-As one can see, most airlines tended to decrease in quality over time.  This is due to the small profit margins that the airline industry is subject to and their increasing costs for fuel, salaries, and government fees/taxes.  All Nippon Airways and Qatar Airways prove that they are committed to a quality flight experience as they actually improved their flight sentiment from 2016 to 2017.
+<div align="center">
+  <img src="images/Airlines_rating_by_year.png">
+</div>
+
+<br />
+
+As one can see, most airlines tended to decrease in perceived quality over time.  This is due to the small profit margins that the airline industry is subject to and their ever increasing costs for fuel, salaries, and government fees and taxes.  All Nippon Airways and Qatar Airways prove that they are committed to a quality flight experience as they actually improved their flight sentiment from 2016 to 2017.
 
 ## The Effect of Bad Publicity on Perception of Quality
 
-United had the largest drop (30%) in perception of quality from 2016 to 2017.  It is suspected that this is at least partly due to an event that unfolded on United Airlines that made it's way on the news.  On April 4th, 2017 a doctor was forcibly removed from an overbooked flight. From the below graph we can see that after people were notified of the event, the overall rating of flight satisfaction dropped drastically.  After July, we notice some recovery and then in the beginning of September, United is exonerated from the event causing more news coverage and another sharp drop in flight satisfaction.
+United Airlines suffered the largest drop (30%) in perception of quality from 2016 to 2017.  We can suspect that this is at least partly due to an event that unfolded on United Airlines that made it's way on the news.  On April 4th, 2017 a doctor was forcibly removed from an overbooked flight. From the below graph we can see that after people were notified of the event, the overall rating of flight satisfaction dropped drastically.  After July, we notice some recovery and then in the beginning of September, United is exonerated from the event causing more news coverage and another sharp drop in flight satisfaction.
 
-![image](images/United_incident_plot.png)
+<br />
+
+<div align="center">
+  <img src="images/United_incident_plot.png">
+</div>
 
 # NLP
 
-## Common Words Positive/Negative Reviews
+## Common Words in Positive & Negative Reviews
 
-For Natural Language Processing, individual words were taken from each review in order to analyze the context in which a customer decided their flight experience was negative or positive.  Below, we can see some word clouds for positive and negative words that were common for certain airlines.
+Individual words were taken from each review in order to analyze the context in which a customer decided their flight experience was negative or positive.  Below, we can see some word clouds for positive and negative words that were common for certain airlines.
 
-![image](images/ANA_positive_wordcloud.png)
-![image](images/Southwest_negative_wordcloud.png)
+<br />
+
+<div align="center">
+  <img src="images/ANA_positive_wordcloud.png">
+  <img src="images/Southwest_negative_wordcloud.png">
+</div>
 
 ## Trigrams
 
-Here, we notice the phrases that are common in positive/negative reviews.  This gives us more of a context to see why a person may be satisfied or unsatisfied with their flight experience.
+With trigrams, we can examine triplets of words that would be used with legitimate frequency in positive or negative reviews.  This gives us more of a context to see why a person may be satisfied or dissatisfied with their flight experience.
 
-![image](images/AA_positive_trigrams.png)
-![image](images/Delta_negative_trigrams.png)
+<br />
+
+<div align="center">
+  <img src="images/AA_positive_trigrams.png">
+  <img src="images/Delta_negative_trigrams.png">
+</div>
 
 ## Model
 
