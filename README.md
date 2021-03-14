@@ -4,6 +4,12 @@ This repository contains scripts and data analysis tools which were used in orde
 
 The data was collected by webscraping reviews from the website [AirlineQuality.com](https://www.airlinequality.com/) for the 4 largest airlines in the United States, the 2 largest airlines from Japan, and Qatar Airways, which was considered the world's best airline by Skytrax in 2017.  Qatar Airways was used as a benchmark when comparing USA and Japan based airlines.  PostreSQL was utilized in order to store the large amounts of data for further analysis.
 
+<br />
+
+<div align="center">
+  <img img src="images/Airlines_mean_ratings.png">
+</div>
+
 # EDA
 
 ## Attribute Analysis
